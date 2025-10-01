@@ -7,6 +7,10 @@ HTTP_SRC=src
 HTTP_TEST=tests
 HTTP_OUT=out
 
+TLS_SRC=src
+TLS_TEST=tests
+TLS_OUT=out
+
 .PHONY: http http-test
 
 http: prepare
@@ -19,7 +23,7 @@ http-test:
 
 # Target para crear el directorio de salida si no existe
 prepare:
-	mkdir -p $(DNS_OUT)
+	mkdir -p $(DNS_OUT) $(TLS_OUT)
 
 # Ejecuta el script de resolución DNS
 dns: prepare
@@ -31,4 +35,19 @@ dns-test:
 
 # Limpia los resultados generados
 clean:
-	rm -f $(DNS_OUT)/dns_results.csv $(DNS_TEST)/results_test.csv $(DNS_TEST)/hosts_test.txt
+	rm -f $(DNS_OUT)/dns_results.csv $(DNS_TEST)/results_test.csv $(DNS_TEST)/hosts_test.txt $(TLS_OUT)/*
+  
+.PHONY: tls tls-test prepare run test clean
+
+tls: prepare
+	bash $(TLS_SRC)/tls-check.sh google.com 443 > $(TLS_OUT)/tls_results.txt
+
+tls-test:
+	cd $(TLS_TEST) && bats tls-check.bats
+
+run:
+	@bash $(TLS_SRC)/tls-check.sh google.com 443
+
+test:
+	bats $(TLS_TEST)/
+	

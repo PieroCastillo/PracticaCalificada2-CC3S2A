@@ -1,0 +1,3 @@
+==> Verificando apertura de socket con nc
+Socket abierto correctamente
+==> Handshake TLS con openssl
