@@ -1,4 +1,4 @@
-HTTP_SRC=src/http
+HTTP_SRC=src
 HTTP_TEST=tests
 HTTP_OUT=out
 
