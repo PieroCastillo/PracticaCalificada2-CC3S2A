@@ -6,6 +6,7 @@
 }
 
 @test "Falla en puerto incorrecto" {
-  run src/tls-check.sh google.com 444 || true
+  run src/tls-check.sh google.com 444
   [ "$status" -ne 0 ]
 }
+

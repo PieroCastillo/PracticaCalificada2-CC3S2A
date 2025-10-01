@@ -10,6 +10,7 @@ Con el comando `make run` se verifican socket y Handshake TLS con openssl
 
 ## Ejecución de pruebas
 ```
+chmod +x src/tls-check.sh
 $ make test
 ```
 ![make test](./img/test.png)
