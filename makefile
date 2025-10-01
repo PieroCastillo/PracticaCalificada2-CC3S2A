@@ -2,7 +2,7 @@ TLS_SRC=src
 TLS_TEST=tests
 TLS_OUT=out
 
-.PHONY: tls tls-test
+.PHONY: tls tls-test prepare run test clean
 
 tls: prepare
 	bash $(TLS_SRC)/tls-check.sh google.com 443 > $(TLS_OUT)/tls_results.txt
@@ -10,14 +10,14 @@ tls: prepare
 tls-test:
 	cd $(TLS_TEST) && bats tls-check.bats
 
-
-.PHONY: run test clean
+prepare:
+	mkdir -p $(TLS_OUT)
 
 run:
-	@bash src/tls-check.sh google.com 443
+	@bash $(TLS_SRC)/tls-check.sh google.com 443
 
 test:
-	bats tests/
+	bats $(TLS_TEST)/
 
 clean:
-	rm -f out/*
+	rm -f $(TLS_OUT)/*
